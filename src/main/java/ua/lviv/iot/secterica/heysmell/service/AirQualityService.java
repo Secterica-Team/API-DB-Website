@@ -55,14 +55,21 @@ public class AirQualityService {
 //    }
 
     private List<AirQuality> getAirQualitiesForSpecificTime(Integer location_id, LocalDate localDate) {
-        return airQualityRepository.findAllByLocationId(location_id)
+        return airQualityRepository
+                .findAllByLocationId(location_id)
                 .stream()
                 .filter(info -> info.getDate().isAfter(localDate))
                 .collect(Collectors.toList());
     }
 
     public List<AirQuality> getForWeek(Integer id) {
-        return getAirQualitiesForSpecificTime(id, LocalDate.now().minusWeeks(1));
+        List<AirQuality> l = getAirQualitiesForSpecificTime(id, LocalDate.now().minusWeeks(1));
+        System.out.println("lol");
+        System.out.println(LocalDate.now().minusWeeks(1));
+        for(AirQuality a:l){
+            System.out.println(a);
+        }
+        return l;
     }
 
     public List<AirQuality> getForMonth(Integer id) {
@@ -77,9 +84,12 @@ public class AirQualityService {
         return airQualityRepository
                 .findAllByLocationId(id)
                 .stream()
-                .filter(info -> info.getDate().equals(LocalDate.now()) ||
-                        (info.getDate().equals(LocalDate.now().minusDays(1)) &&
-                                info.getTime().isAfter(LocalTime.now())))
+                .filter(info -> {
+                    if (info.getTime()==null) return false;
+                    return info.getDate().equals(LocalDate.now()) ||
+                            (info.getDate().equals(LocalDate.now().minusDays(1)) &&
+                                    info.getTime().isAfter(LocalTime.now()));
+                })
                 .collect(Collectors.toList());
     }
 
