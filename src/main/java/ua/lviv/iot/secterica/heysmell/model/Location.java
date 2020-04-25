@@ -1,23 +1,55 @@
 package ua.lviv.iot.secterica.heysmell.model;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.MongoId;
+
+@Document
 public class Location {
-    private int longtitude;
-    private int latitude;
+    @Id
+    @MongoId
 
-
-    public int getLongtitude() {
-        return longtitude;
+    private String id;
+    private String name;
+    private double longitude;
+    private double latitude;
+    @Override
+    public String toString() {
+        return "Location{" +
+                "longitude=" + longitude +
+                ", latitude=" + latitude +
+                '}';
     }
 
-    public void setLongtitude(int longtitude) {
-        this.longtitude = longtitude;
+    public double getLongitude() {
+        return longitude;
     }
 
-    public int getLatitude() {
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(int latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
