@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class MainController {
     @GetMapping("/")
     public String getMain(){
-        return "Hello, it's my own API, I'm cool";
-}
+//        return "Hello, it's my own API, I'm cool";
+        return "yes, bitch!";
+    }
     @GetMapping("/help")
     public String getHelp() {
         return "lol, help yourself by your own!\n Joking, it's just not implemented, sorry";
