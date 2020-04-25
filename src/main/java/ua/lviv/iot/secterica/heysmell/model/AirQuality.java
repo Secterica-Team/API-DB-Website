@@ -69,7 +69,9 @@ public class AirQuality {
                 ", lpg=" + lpg +
                 ", smk=" + smk +
                 ", dst=" + dst +
-//                ", locationId=" + locationId +
+                ", locationId=" + locationId +
+                ", date=" + date +
+                ", time=" + time +
                 '}';
     }
 

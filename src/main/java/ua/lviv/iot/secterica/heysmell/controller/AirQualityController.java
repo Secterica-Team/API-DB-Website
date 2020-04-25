@@ -27,21 +27,22 @@ public class AirQualityController {
     }
 
     @GetMapping("/last_week")
-    public List<AirQuality> getForWeek(@RequestParam(name = "location", required = true) Integer id) {
+    public List<AirQuality> getForWeek(@RequestParam(name = "location") Integer id) {
         return airQualityService.getForWeek(id);
     }
 
     @GetMapping("/last_month")
-    public List<AirQuality> getForMonth(@RequestParam(name = "location", required = true) Integer id) {
+    public List<AirQuality> getForMonth(@RequestParam(name = "location") Integer id) {
         return airQualityService.getForMonth(id);
     }
 
     @GetMapping("/last_year")
-    public List<AirQuality> getForYear(@RequestParam(name = "location", required = true) Integer id) {
+    public List<AirQuality> getForYear(@RequestParam(name = "location") Integer id) {
         return airQualityService.getForYear(id);
     }
+
     @GetMapping("/last_day")
-    public List<AirQuality> getForDay(@RequestParam(name = "location", required = true) Integer id){
+    public List<AirQuality> getForDay(@RequestParam(name = "location") Integer id){
         return airQualityService.getAirQualitiesForDay(id);
     }
 
