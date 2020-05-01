@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--<persistence version="2.1"-->
+<!--             xmlns="http://xmlns.jcp.org/xml/ns/persistence"-->
+<!--             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"-->
+<!--             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">-->
+<!--    <persistence-unit name="customerPersistenceUnit"-->
+<!--                      transaction-type="JTA">-->
+<!--        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>-->
+<!--        <exclude-unlisted-classes>false</exclude-unlisted-classes>-->
+
+<!--        <properties>-->
+<!--            <property name="hibernate.dialect"-->
+<!--                      value="org.hibernate.dialect.MySQL8Dialect" />-->
+<!--            <property name="hibernate.hbm2ddl.auto" value="create"/>-->
+<!--            <property name="hibernate.show_sql" value="true" />-->
+<!--            <property name="hibernate.format_sql" value="true" />-->
+<!--        </properties>-->
+<!--    </persistence-unit>-->
+<beans xmlns:mongo="http://www.springframework.org/schema/data/mongo">
+    <mongo:db-factory id="mongoDbFactory" host="${mongo.host}" port="${mongo.port}" dbname="${mongo.dbname}"/>
+
+    <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+        <constructor-arg name="mongoDbFactory" ref="mongoDbFactory"/>
+        <constructor-arg name="mongoConverter" ref="mongoConverter"/>
+        <property name="writeResultChecking" value="EXCEPTION"/>
+    </bean>
+
+    <bean id="mongoTypeMapper" class="org.springframework.data.mongodb.core.convert.DefaultMongoTypeMapper">
+        <constructor-arg name="typeKey">
+            <null/>
+        </constructor-arg>
+    </bean>
+
+    <bean id="mongoMappingContext" class="org.springframework.data.mongodb.core.mapping.MongoMappingContext"/>
+
+    <bean id="mongoConverter" class="org.springframework.data.mongodb.core.convert.MappingMongoConverter">
+        <constructor-arg name="mongoDbFactory" ref="mongoDbFactory"/>
+        <constructor-arg name="mappingContext" ref="mongoMappingContext"/>
+        <property name="typeMapper" ref="mongoTypeMapper"/>
+    </bean>
+</beans>
+
+

@@ -13,36 +13,36 @@ import java.util.List;
 @RequestMapping("/air-quality")
 @RestController
 //@RequiredArgsConstructor
-@CrossOrigin("*")
+@CrossOrigin(value = "*", origins = "*", allowedHeaders = "*", maxAge = 3L)
 public class AirQualityController {
+
     @Autowired
     private AirQualityService airQualityService;
 
-    @GetMapping("/")
+    @GetMapping
     public List<AirQuality> getAirQualitiesFor() {
         // getting info about air quality for some period of time
-        // return airQualityService.getAirQualitiesFor(Integer.parseInt(String.valueOf(id)), Integer.parseInt(String.valueOf(first)));
-
+//        System.out.println("lol");
         return airQualityService.getAllAirQualities();
     }
 
     @GetMapping("/last_week")
-    public List<AirQuality> getForWeek(@RequestParam(name = "location") Integer id) {
-        return airQualityService.getForWeek(id);
+    public List<AirQuality> getForWeek(@RequestParam(name = "location") String id) {
+        return airQualityService.getAirQualitiesForWeek(id);
     }
 
     @GetMapping("/last_month")
-    public List<AirQuality> getForMonth(@RequestParam(name = "location") Integer id) {
-        return airQualityService.getForMonth(id);
+    public List<AirQuality> getForMonth(@RequestParam(name = "location") String id) {
+        return airQualityService.getAirQualitiesForMonth(id);
     }
 
     @GetMapping("/last_year")
-    public List<AirQuality> getForYear(@RequestParam(name = "location") Integer id) {
-        return airQualityService.getForYear(id);
+    public List<AirQuality> getForYear(@RequestParam(name = "location") String id) {
+        return airQualityService.getAirQualitiesForYear(id);
     }
 
     @GetMapping("/last_day")
-    public List<AirQuality> getForDay(@RequestParam(name = "location") Integer id){
+    public List<AirQuality> getForDay(@RequestParam(name = "location") String id){
         return airQualityService.getAirQualitiesForDay(id);
     }
 
@@ -51,12 +51,6 @@ public class AirQualityController {
         return "lol, help yourself by your own!\n Joking, it's just not implemented, sorry";
     }
 
-//    @GetMapping("/{id}")
-//    public ResponseEntity<AirQuality> getAirQuality(@PathVariable(name = "id") Integer id) {
-//        // getting info about certain air quality
-//        // not implemented yet
-//        return ResponseEntity.status(HttpStatus.OK).body(airQualityService.getAirQuality(id));
-//    }
 
     @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<AirQuality> addNewAirQuality(@RequestBody AirQuality quality) {
@@ -73,8 +67,8 @@ public class AirQualityController {
         return airQualityService.addLocation(location);
     }
 
-//    @DeleteMapping
-//    public void deleteAll() {
-//        airQualityService.deleteAll();
-//    }
+    @DeleteMapping
+    public void deleteAll() {
+        airQualityService.deleteAll();
+    }
 }

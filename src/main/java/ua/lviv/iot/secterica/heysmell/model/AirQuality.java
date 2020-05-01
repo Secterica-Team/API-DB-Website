@@ -1,77 +1,80 @@
 package ua.lviv.iot.secterica.heysmell.model;
 
-import org.springframework.data.annotation.Id;
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 
-@Document
+//@Document
+@Document(collection = "air_quality")
 public class AirQuality {
-    @Id
     @MongoId
-    private String id;
+//    private String _id;//id of transaction
+    private ObjectId _id;
     private double tmp;//temperature
     private double hum;//humanity
     private double co;
     private double co2;
     private double lpg;//liquid petroleum gas
     private double smk;//smoke
-    private double dst;//dust
-    private Integer locationId;
-    private LocalDate date;
-    private LocalTime time;
+    private double dus;//dust
+    private String id;// location_id
+    private LocalDateTime dateTime;// date and time)
 
-
-    public LocalDate getDate() {
-        return date;
+    public AirQuality() {
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+//        _id:5ea9e4c6309121895231ed5c
+//        id:""
+//        hum:0
+//        tmp:null
+//        co:200
+//        co2:10
+//        lpg:300
+//        smk:20
+//        dus:915.9129028320312
+//        date:2020-04-29T23:34:14.779+00:00
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
     }
 
-    public LocalTime getTime() {
-        return time;
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
     }
 
-    public void setTime(LocalTime time) {
-        this.time = time;
+    public double getDus() {
+        return dus;
     }
 
-
-    public double getDst() {
-        return dst;
+    public void setDus(double dus) {
+        this.dus = dus;
     }
 
-    public void setDst(double dst) {
-        this.dst = dst;
+    public String getId() {
+        return id;
     }
 
-    public Integer getLocationId() {
-        return locationId;
-    }
-
-    public void setLocationId(Integer locationId) {
-        this.locationId = locationId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     @Override
     public String toString() {
         return "AirQuality{" +
-                "id='" + id + '\'' +
+                "id='" + _id + '\'' +
                 ", tmp=" + tmp +
                 ", hum=" + hum +
                 ", co=" + co +
                 ", co2=" + co2 +
                 ", lpg=" + lpg +
                 ", smk=" + smk +
-                ", dst=" + dst +
-                ", locationId=" + locationId +
-                ", date=" + date +
-                ", time=" + time +
+                ", dst=" + dus +
+                ", locationId=" + id +
+//                ", date=" + date +
+//                ", time=" + time +
                 '}';
     }
 
@@ -123,12 +126,12 @@ public class AirQuality {
         this.smk = smk;
     }
 
-    public String getId() {
-        return id;
+    public ObjectId get_id() {
+        return _id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void set_id(ObjectId _id) {
+        this._id = _id;
     }
 
 }

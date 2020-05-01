@@ -9,8 +9,7 @@ import ua.lviv.iot.secterica.heysmell.model.Location;
 import ua.lviv.iot.secterica.heysmell.repository.AirQualityRepository;
 import ua.lviv.iot.secterica.heysmell.repository.LocationRepository;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,11 +21,10 @@ public class AirQualityService {
     @Autowired
     private LocationRepository locationRepository;
 
-    public List<AirQuality> getAllAirQualities(){
+    public List<AirQuality> getAllAirQualities() {
         //getting info from database
-        return  airQualityRepository.findAll();
+        return airQualityRepository.findAll();
     }
-
 
 
 //    public AirQuality getAirQuality(int id){
@@ -37,7 +35,7 @@ public class AirQualityService {
 //        return called.orElse(quality);
 //    }
 
-    public List<Location> getAllLocations(){
+    public List<Location> getAllLocations() {
         return locationRepository.findAll();
     }
 
@@ -46,51 +44,37 @@ public class AirQualityService {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-//    public void deleteAll() {
-////        airQualityRepository.deleteAll();
-//        List<AirQuality> qualities = airQualityRepository.findAll();
-//        for (AirQuality quality:qualities) {
-//            airQualityRepository.delete(quality);
-//        }
-//    }
-
-    private List<AirQuality> getAirQualitiesForSpecificTime(Integer location_id, LocalDate localDate) {
-        return airQualityRepository
-                .findAllByLocationId(location_id)
-                .stream()
-                .filter(info -> info.getDate().isAfter(localDate))
-                .collect(Collectors.toList());
-    }
-
-    public List<AirQuality> getForWeek(Integer id) {
-        List<AirQuality> l = getAirQualitiesForSpecificTime(id, LocalDate.now().minusWeeks(1));
-        System.out.println("lol");
-        System.out.println(LocalDate.now().minusWeeks(1));
-        for(AirQuality a:l){
-            System.out.println(a);
+    public void deleteAll() {
+//        airQualityRepository.deleteAll();
+        List<AirQuality> qualities = airQualityRepository.findAll();
+        for (AirQuality quality:qualities) {
+            airQualityRepository.delete(quality);
         }
-        return l;
     }
 
-    public List<AirQuality> getForMonth(Integer id) {
-        return getAirQualitiesForSpecificTime(id, LocalDate.now().minusMonths(1));
-    }
-
-    public List<AirQuality> getForYear(Integer id) {
-        return getAirQualitiesForSpecificTime(id, LocalDate.now().minusYears(1));
-    }
-
-    public List<AirQuality> getAirQualitiesForDay(Integer id) {
+    private List<AirQuality> getAirQualitiesForSpecificTime(String locationId, LocalDateTime localDate) {
         return airQualityRepository
-                .findAllByLocationId(id)
+                .findAllById(locationId)
                 .stream()
-                .filter(info -> {
-                    if (info.getTime()==null) return false;
-                    return info.getDate().equals(LocalDate.now()) ||
-                            (info.getDate().equals(LocalDate.now().minusDays(1)) &&
-                                    info.getTime().isAfter(LocalTime.now()));
-                })
+                .filter(info -> info.getDateTime().isAfter(localDate))
                 .collect(Collectors.toList());
+//        return null;
+    }
+
+    public List<AirQuality> getAirQualitiesForDay(String id) {
+        return getAirQualitiesForSpecificTime(id, LocalDateTime.now().minusDays(1));
+    }
+
+    public List<AirQuality> getAirQualitiesForWeek(String id) {
+        return getAirQualitiesForSpecificTime(id, LocalDateTime.now().minusWeeks(1));
+    }
+
+    public List<AirQuality> getAirQualitiesForMonth(String id) {
+        return getAirQualitiesForSpecificTime(id, LocalDateTime.now().minusMonths(1));
+    }
+
+    public List<AirQuality> getAirQualitiesForYear(String id) {
+        return getAirQualitiesForSpecificTime(id, LocalDateTime.now().minusYears(1));
     }
 
     public ResponseEntity<Location> addLocation(Location location) {

@@ -4,26 +4,21 @@ package ua.lviv.iot.secterica.heysmell;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
-
 
 public class MongoApp {
 
     private static final Log log = LogFactory.getLog(MongoApp.class);
 
     public static void main(String[] args) {
-        Date date = Date.from(Instant.now());
-        Date date2 = new Date();
-        LocalDate date3 = null;
+//        Date date = Date.from(Instant.now());
+//        Date date2 = new Date();
+//        LocalDate date3 = null;
 //      i think i can use this class for my purposes, it's quite easy and simple and etc.
-        LocalDateTime dateTime = LocalDateTime.now();
+//        LocalDateTime dateTime = LocalDateTime.now();
 
-        date3 = LocalDate.of(dateTime.getYear(), dateTime.getMonth(), dateTime.getDayOfMonth());
-        System.out.println(date2);
-        System.out.println(date3);
+//        date3 = LocalDate.of(dateTime.getYear(), dateTime.getMonth(), dateTime.getDayOfMonth());
+//        System.out.println(date2);
+//        System.out.println(date3);
 //        System.out.println(date.toInstant());
 //        MongoClient mongoClient = MongoClients.create();
 //        MongoDatabase database = mongoClient.getDatabase("localhost");
