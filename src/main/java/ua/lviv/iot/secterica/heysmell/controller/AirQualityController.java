@@ -12,7 +12,6 @@ import java.util.List;
 
 @RequestMapping("/air-quality")
 @RestController
-//@RequiredArgsConstructor
 @CrossOrigin(value = "*", origins = "*", allowedHeaders = "*", maxAge = 3L)
 public class AirQualityController {
 
@@ -22,7 +21,6 @@ public class AirQualityController {
     @GetMapping
     public List<AirQuality> getAirQualitiesFor() {
         // getting info about air quality for some period of time
-//        System.out.println("lol");
         return airQualityService.getAllAirQualities();
     }
 

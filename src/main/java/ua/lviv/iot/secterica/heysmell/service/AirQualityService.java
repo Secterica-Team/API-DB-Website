@@ -10,6 +10,7 @@ import ua.lviv.iot.secterica.heysmell.repository.AirQualityRepository;
 import ua.lviv.iot.secterica.heysmell.repository.LocationRepository;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,6 +19,8 @@ public class AirQualityService {
 
     @Autowired
     private AirQualityRepository airQualityRepository;
+    @Autowired
+    private AirQualityRepository airQualityByNameRepository;
     @Autowired
     private LocationRepository locationRepository;
 
@@ -53,16 +56,25 @@ public class AirQualityService {
     }
 
     private List<AirQuality> getAirQualitiesForSpecificTime(String locationId, LocalDateTime localDate) {
-        return airQualityRepository
-                .findAllById(locationId)
-                .stream()
-                .filter(info -> info.getDateTime().isAfter(localDate))
-                .collect(Collectors.toList());
-//        return null;
+        List<AirQuality> listOfSuitableAirQualities = new ArrayList<>();
+        try{
+            listOfSuitableAirQualities = airQualityRepository
+                    .findAllById(locationId)
+                    .stream()
+                    .filter(info -> info.getDateTime().isAfter(localDate))
+                    .collect(Collectors.toList());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return listOfSuitableAirQualities;
     }
 
     public List<AirQuality> getAirQualitiesForDay(String id) {
-        return getAirQualitiesForSpecificTime(id, LocalDateTime.now().minusDays(1));
+        return airQualityByNameRepository
+                .findAll()
+                .stream()
+                .filter(info -> info.getId().equals(id))
+                .collect(Collectors.toList());
     }
 
     public List<AirQuality> getAirQualitiesForWeek(String id) {

@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 
 
 //@Document
+//@Document(collection = "a")
 @Document(collection = "air_quality")
 public class AirQuality {
     @MongoId
@@ -23,19 +24,6 @@ public class AirQuality {
     private String id;// location_id
     private LocalDateTime dateTime;// date and time)
 
-    public AirQuality() {
-    }
-
-//        _id:5ea9e4c6309121895231ed5c
-//        id:""
-//        hum:0
-//        tmp:null
-//        co:200
-//        co2:10
-//        lpg:300
-//        smk:20
-//        dus:915.9129028320312
-//        date:2020-04-29T23:34:14.779+00:00
 
     public LocalDateTime getDateTime() {
         return dateTime;
