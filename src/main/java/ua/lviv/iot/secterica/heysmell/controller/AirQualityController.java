@@ -4,7 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ua.lviv.iot.secterica.heysmell.model.AirQuality;
+import ua.lviv.iot.secterica.heysmell.model.AirQualityDuringDay;
+import ua.lviv.iot.secterica.heysmell.model.AirQualityForDays;
 import ua.lviv.iot.secterica.heysmell.model.Location;
 import ua.lviv.iot.secterica.heysmell.service.AirQualityService;
 
@@ -19,28 +20,28 @@ public class AirQualityController {
     private AirQualityService airQualityService;
 
     @GetMapping
-    public List<AirQuality> getAirQualitiesFor() {
+    public List<AirQualityForDays> getAirQualitiesFor() {
         // getting info about air quality for some period of time
         return airQualityService.getAllAirQualities();
     }
 
     @GetMapping("/last_week")
-    public List<AirQuality> getForWeek(@RequestParam(name = "location") String id) {
+    public List<AirQualityForDays> getForWeek(@RequestParam(name = "location") String id) {
         return airQualityService.getAirQualitiesForWeek(id);
     }
 
     @GetMapping("/last_month")
-    public List<AirQuality> getForMonth(@RequestParam(name = "location") String id) {
+    public List<AirQualityForDays> getForMonth(@RequestParam(name = "location") String id) {
         return airQualityService.getAirQualitiesForMonth(id);
     }
 
     @GetMapping("/last_year")
-    public List<AirQuality> getForYear(@RequestParam(name = "location") String id) {
+    public List<AirQualityForDays> getForYear(@RequestParam(name = "location") String id) {
         return airQualityService.getAirQualitiesForYear(id);
     }
 
     @GetMapping("/last_day")
-    public List<AirQuality> getForDay(@RequestParam(name = "location") String id){
+    public List<AirQualityDuringDay> getForDay(@RequestParam(name = "location") String id){
         return airQualityService.getAirQualitiesForDay(id);
     }
 
@@ -51,7 +52,7 @@ public class AirQualityController {
 
 
     @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<AirQuality> addNewAirQuality(@RequestBody AirQuality quality) {
+    public ResponseEntity<AirQualityDuringDay> addNewAirQuality(@RequestBody AirQualityForDays quality) {
         return airQualityService.addNewAirQualityInfo(quality);
     }
 

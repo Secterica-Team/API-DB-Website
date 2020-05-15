@@ -1,27 +1,20 @@
 package ua.lviv.iot.secterica.heysmell.model;
 
 import org.bson.types.ObjectId;
-import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
-import java.time.LocalDateTime;
-
-//class for getting information from collection "air_quality" AKA mean air qualities for whole days
-@Document(collection = "air_quality")
 public class AirQuality {
     @MongoId
-//    private String _id;//id of transaction
-    private ObjectId _id;
-    private double tmp;//temperature
-    private double hum;//humanity
-    private double co;
-    private double co2;
-    private double lpg;//liquid petroleum gas
-    private double smk;//smoke
-    private double dus;//dust
-    private int aqi;// air quality index
-    private String id;// location_id
-    private LocalDateTime dateTime;// date and time)
+    protected ObjectId _id;
+    protected double tmp;//temperature
+    protected double hum;//humanity
+    protected double co;
+    protected double co2;
+    protected double lpg;//liquid petroleum gas
+    protected double smk;//smoke
+    protected double dus;//dust
+    protected int aqi;// air quality index
+    protected String id;// location id
 
     public int getAqi() {
         return aqi;
@@ -29,14 +22,6 @@ public class AirQuality {
 
     public void setAqi(int aqi) {
         this.aqi = aqi;
-    }
-
-    public LocalDateTime getDateTime() {
-        return dateTime;
-    }
-
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
     }
 
     public double getDus() {
@@ -67,8 +52,6 @@ public class AirQuality {
                 ", smk=" + smk +
                 ", dst=" + dus +
                 ", locationId=" + id +
-//                ", date=" + date +
-//                ", time=" + time +
                 '}';
     }
 
