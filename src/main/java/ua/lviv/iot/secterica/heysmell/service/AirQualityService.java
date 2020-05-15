@@ -70,11 +70,7 @@ public class AirQualityService {
     }
 
     public List<AirQuality> getAirQualitiesForDay(String id) {
-        return airQualityByNameRepository
-                .findAll()
-                .stream()
-                .filter(info -> info.getId().equals(id))
-                .collect(Collectors.toList());
+        return airQualityByNameRepository.findAllById(id);
     }
 
     public List<AirQuality> getAirQualitiesForWeek(String id) {

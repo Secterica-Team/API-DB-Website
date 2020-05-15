@@ -6,11 +6,11 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.time.LocalDate;
 
-
+//class for getting information from collection "air_quality_by_day"
 @Document(collection = "air_quality_by_day")
 public class AirQualityByDay {
     @MongoId
-////    private String _id;//id of transaction
+//    private String _id;//id of transaction
     private ObjectId _id;
     private double temperature;//temperature
     private double humidity;//humidity
@@ -19,9 +19,17 @@ public class AirQualityByDay {
     private double lpg;//liquid petroleum gas
     private double smoke;//smoke
     private double dust;//dust
+    private int aqi;// air quality index
     private String sensor_id;// location_id
     private LocalDate date;// date and time)
 
+    public int getAqi() {
+        return aqi;
+    }
+
+    public void setAqi(int aqi) {
+        this.aqi = aqi;
+    }
 
     public LocalDate getDate() {
         return date;
