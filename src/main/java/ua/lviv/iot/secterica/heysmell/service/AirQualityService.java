@@ -47,7 +47,6 @@ public class AirQualityService {
 
     public ResponseEntity<AirQualityDuringDay> addNewAirQualityInfo(AirQualityForDays quality) {
         airQualityForDaysRepository.save(quality);
-        airQualityForDaysRepository.findAllById("CZ1").stream().forEach(v -> System.out.println(v));
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
@@ -70,11 +69,33 @@ public class AirQualityService {
         }catch (Exception e){
             e.printStackTrace();
         }
-        return listOfSuitableAirQualities;
+        return checkIfListWithDataIsEmptyAndReturnAnyOtherNotEmptyList(localDate, listOfSuitableAirQualities);
+    }
+
+    private List<AirQualityForDays> checkIfListWithDataIsEmptyAndReturnAnyOtherNotEmptyList(LocalDateTime localDate, List<AirQualityForDays> listOfSuitableAirQualities) {
+        if (listOfSuitableAirQualities.isEmpty()){
+            for (Location location: getAllLocations()){
+                List<AirQualityForDays> list = getAirQualitiesForSpecificTime(location.getId(), localDate);
+                if (!list.isEmpty()){
+                    return list;
+                }
+            }
+            return new ArrayList<>();
+        }else return listOfSuitableAirQualities;
     }
 
     public List<AirQualityDuringDay> getAirQualitiesForDay(String id) {
-        return airQualityDuringDayRepository.findAllById(id);
+        List<AirQualityDuringDay> listOfAirQualities = airQualityDuringDayRepository.findAllById(id);
+        if (listOfAirQualities.isEmpty()){
+            for (Location location: getAllLocations()){
+                List<AirQualityDuringDay> list = getAirQualitiesForDay(location.getId());
+                if (!list.isEmpty()){
+                    return list;
+                }
+            }
+            return new ArrayList<>();
+
+        } else return listOfAirQualities;
     }
 
     public List<AirQualityForDays> getAirQualitiesForWeek(String id) {
